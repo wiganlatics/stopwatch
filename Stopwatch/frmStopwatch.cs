@@ -1,9 +1,8 @@
-﻿
+﻿using System;
+using System.Windows.Forms;
+
 namespace Stopwatch
 {
-    using System;
-    using System.Windows.Forms;
-
     public partial class frmStopwatch : Form
     {
         /// <summary>
@@ -128,11 +127,7 @@ namespace Stopwatch
         /// <param name="e">The event arguments.</param>
         private void lblMinuteTens_TextChanged(object sender, EventArgs e)
         {
-            if (lblMinuteTens.Text == "6")
-            {
-                lblMinuteTens.Text = "0";
-                lblHours.Text = (Int32.Parse(lblHours.Text) + 1).ToString();
-            }
+            updateLabel(lblMinuteTens, lblHours, "6");
         }
 
         /// <summary>
@@ -142,11 +137,7 @@ namespace Stopwatch
         /// <param name="e">The event arguments.</param>
         private void lblMinutes_TextChanged(object sender, EventArgs e)
         {
-            if (lblMinutes.Text == "10")
-            {
-                lblMinutes.Text = "0";
-                lblMinuteTens.Text = (Int32.Parse(lblMinuteTens.Text) + 1).ToString();
-            }
+            updateLabel(lblMinutes, lblMinuteTens, "10");
         }
 
         /// <summary>
@@ -156,11 +147,7 @@ namespace Stopwatch
         /// <param name="e">The event arguments.</param>
         private void lblSecondTens_TextChanged(object sender, EventArgs e)
         {
-            if (lblSecondTens.Text == "6")
-            {
-                lblSecondTens.Text = "0";
-                lblMinutes.Text = (Int32.Parse(lblMinutes.Text) + 1).ToString();
-            }
+            updateLabel(lblSecondTens, lblMinutes, "6");
         }
 
         /// <summary>
@@ -170,11 +157,7 @@ namespace Stopwatch
         /// <param name="e">The event arguments.</param>
         private void lblSeconds_TextChanged(object sender, EventArgs e)
         {
-            if (lblSeconds.Text == "10")
-            {
-                lblSeconds.Text = "0";
-                lblSecondTens.Text = (Int32.Parse(lblSecondTens.Text) + 1).ToString();
-            }
+            updateLabel(lblSeconds, lblSecondTens, "10");
         }
 
         /// <summary>
@@ -184,10 +167,21 @@ namespace Stopwatch
         /// <param name="e">The event arguments.</param>
         private void lblTenthSeconds_TextChanged(object sender, EventArgs e)
         {
-            if (lblTenthSeconds.Text == "10")
+            updateLabel(lblTenthSeconds, lblSeconds, "10");
+        }
+
+        /// <summary>
+        /// Triggers the parent label back to zero and increments child label if trigger value is reached.
+        /// </summary>
+        /// <param name="parent">The label to reset if it reaches trigger value.</param>
+        /// <param name="child">The label to increment if parent reaches trigger value.</param>
+        /// <param name="triggerValue">Reset parent to zero if it has reached this value.</param>
+        private void updateLabel(Label parent, Label child, string triggerValue)
+        {
+            if (parent.Text == triggerValue)
             {
-                lblTenthSeconds.Text = "0";
-                lblSeconds.Text = (Int32.Parse(lblSeconds.Text) + 1).ToString();
+                parent.Text = "0";
+                child.Text = (Int32.Parse(child.Text) + 1).ToString();
             }
         }
     }
